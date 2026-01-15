@@ -1,5 +1,5 @@
 # Use official Python runtime as base image
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 # Set working directory in container
 WORKDIR /app
@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libreoffice-writer \
     libreoffice-calc \
     libreoffice-impress \
+    curl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
