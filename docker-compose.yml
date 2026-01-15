@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  legacy-office-converter:
+    build: .
+    container_name: legacy-office-converter
+    ports:
+      - "${PORT:-9800}:9800"
+    environment:
+      - LIBREOFFICE_BINARY=${LIBREOFFICE_BINARY:-soffice}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${PORT:-9800}/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+#    volumes:
+      # Optional: Mount a directory for persistent logs
+      # - ./logs:/app/logs
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
