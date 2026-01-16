@@ -1,6 +1,7 @@
 services:
   legacy-office-converter:
     build: .
+    pull_policy: build
     container_name: legacy-office-converter
     ports:
       - "${PORT:-9800}:9800"
@@ -24,3 +25,11 @@ services:
         reservations:
           cpus: '0.5'
           memory: 512M
+    networks:
+      - converter-network
+
+# If you need to create a custom network
+networks:
+  converter-network:
+    name: ${NETWORK_NAME:-gptalk}
+    external: true
